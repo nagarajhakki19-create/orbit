@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  body {
+    background-color: #080D19;
+    color: #F4F6FA;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Orbitron', system-ui, sans-serif;
+    letter-spacing: 0.05em;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Space Mono', monospace;
+  }
+}
+
+/* Custom aerospace glassmorphism & HUD glow styles */
+.hud-panel {
+  background: rgba(16, 26, 43, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(66, 217, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+}
+
+.hud-panel-coral {
+  background: rgba(25, 12, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 107, 112, 0.35);
+  box-shadow: 0 0 25px rgba(255, 107, 112, 0.25);
+}
+
+.hud-panel-teal {
+  background: rgba(10, 28, 30, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(54, 224, 192, 0.28);
+  box-shadow: 0 0 25px rgba(54, 224, 192, 0.18);
+}
+
+/* Space starfield background generator */
+.space-stars {
+  background-image: 
+    radial-gradient(1px 1px at 25px 35px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 120px 80px, rgba(66, 217, 255, 0.8), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 240px 180px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 380px 240px, rgba(54, 224, 192, 0.8), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 510px 90px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 700px 320px, rgba(255, 181, 71, 0.7), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 860px 210px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 900px 500px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080D19;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E3250;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #42D9FF;
+}
