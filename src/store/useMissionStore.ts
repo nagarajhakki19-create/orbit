@@ -133,6 +133,34 @@ const DEFAULT_MISSION_CONFIG: MissionConfig = {
   titaniumUnits: 120
 };
 
+const STORAGE_KEY = 'orbit_mission_save_v1';
+
+function loadPersistedSession() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveSession(data: {
+  config: MissionConfig;
+  placedBuildings: PlacedBuilding[];
+  lifeSupport: LifeSupportTelemetry;
+  power: PowerTelemetry;
+  simulation: SimulationState;
+  incidents: MissionIncident[];
+}) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // Quota or private browsing suppression
+  }
+}
+
 interface MissionStoreState {
   // Navigation
   activeView: AppView;
@@ -180,8 +208,10 @@ interface MissionStoreState {
   loadInitialOutpostPreset: () => void;
 }
 
-const INITIAL_LIFE_SUPPORT = calculateInitialLifeSupport(4, 30, 'specialist');
-const INITIAL_POWER = calculateInitialPower([]);
+const savedSession = loadPersistedSession();
+const INITIAL_CONFIG: MissionConfig = savedSession?.config || DEFAULT_MISSION_CONFIG;
+const INITIAL_LIFE_SUPPORT: LifeSupportTelemetry = savedSession?.lifeSupport || calculateInitialLifeSupport(INITIAL_CONFIG.crewSize, INITIAL_CONFIG.missionDurationSols, INITIAL_CONFIG.difficulty);
+const INITIAL_POWER: PowerTelemetry = savedSession?.power || calculateInitialPower(savedSession?.placedBuildings || []);
 
 export const useMissionStore = create<MissionStoreState>((set, get) => ({
   activeView: 'landing',
@@ -196,7 +226,7 @@ export const useMissionStore = create<MissionStoreState>((set, get) => ({
     set({ isAudioMuted: muted });
   },
 
-  config: DEFAULT_MISSION_CONFIG,
+  config: INITIAL_CONFIG,
   updateConfig: (patch) => {
     sound.playClick();
     set((state) => {
@@ -206,6 +236,14 @@ export const useMissionStore = create<MissionStoreState>((set, get) => ({
         newConfig.missionDurationSols,
         newConfig.difficulty
       );
+      saveSession({
+        config: newConfig,
+        placedBuildings: state.placedBuildings,
+        lifeSupport: newLifeSupport,
+        power: state.power,
+        simulation: state.simulation,
+        incidents: state.incidents
+      });
       return { config: newConfig, lifeSupport: newLifeSupport };
     });
   },
@@ -622,6 +660,11 @@ export const useMissionStore = create<MissionStoreState>((set, get) => ({
 
   resetMission: () => {
     sound.playClick();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Ignore
+    }
     set({
       activeView: 'setup',
       config: DEFAULT_MISSION_CONFIG,

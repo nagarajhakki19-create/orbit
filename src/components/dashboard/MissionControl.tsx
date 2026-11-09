@@ -293,6 +293,19 @@ export const MissionControl: React.FC = () => {
 
       </div>
 
+      {/* Educational Realism & Simulation Disclaimer Footer */}
+      <div className="pt-4 border-t border-space-border/50 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-space-muted gap-2">
+        <div className="flex items-center space-x-2">
+          <ShieldCheck className="w-4 h-4 text-space-teal shrink-0" />
+          <span>
+            EDUCATIONAL SIMULATION NOTICE: Mathematical models are simplified for educational training based on NASA Baseline Values & Assumptions (BVAD). Not a certified aerospace engineering simulator.
+          </span>
+        </div>
+        <span className="text-space-cyan shrink-0 px-2 py-0.5 rounded bg-space-surface border border-space-border">
+          LOCAL STATE PERSISTED
+        </span>
+      </div>
+
     </div>
   );
 };
