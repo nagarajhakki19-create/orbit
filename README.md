@@ -89,6 +89,9 @@ Visit the local URL shown in your terminal (typically `http://localhost:5173`).
 | **Member 3** | 3D Planetary Explorer & 3D Outpost Construction Builder |
 | **Member 4** | Life Support Engine, Diurnal Power Simulation & Math Models |
 | **Member 5** | Mission Anomaly Engine, Failure Detective, Evaluation & QA |
+|**Member 6 – Testing, Quality Assurance & Documentation**
+
+Responsible for testing the project, identifying and reporting bugs, checking that all features work correctly, and ensuring smooth integration between different modules. Helped verify the 3D environment, simulation systems, user interface, and mission features. Also contributed to project documentation, user instructions, final presentation, and submission preparation.|
 
 ---
 
